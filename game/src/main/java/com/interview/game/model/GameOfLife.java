@@ -18,6 +18,10 @@ public class GameOfLife {
         return board;
     }
 
+    void setBoard(boolean[][] board) {
+        this.board = board;
+    }
+
     // Update the board to the next generation based on the rules of the game
     public void evolve() {
         boolean[][] newBoard = new boolean[size][size];
@@ -36,11 +40,15 @@ public class GameOfLife {
         board = newBoard;
     }
 
-    private int countNeighbors(int x, int y) {
+    int countNeighbors(int x, int y) {
         int count = 0;
-        int[] cellsToCheck = new int[] { -1, 1 };
+        int[] cellsToCheck = new int[] { -1, 0, 1 };
         for (int i : cellsToCheck) {
             for (int j : cellsToCheck) {
+                // don't check the current cell
+                if (i == 0 && j == 0) {
+                    continue;
+                }
                 int neighborX = x + i;
                 int neighborY = y + j;
                 if (isOnBoard(neighborX, neighborY) && isAlive(neighborX, neighborY)) {
@@ -51,12 +59,12 @@ public class GameOfLife {
         return count;
     }
 
-    private boolean isAlive(int x, int y) {
-        return board[x][y];
+    boolean isOnBoard(int x, int y) {
+        return x >= 0 && x < size && y >= 0 && y < size;
     }
 
-    private boolean isOnBoard(int x, int y) {
-        return x >= 0 && x < size && y >= 0 && y < size;
+    boolean isAlive(int x, int y) {
+        return board[x][y];
     }
 
     private void randomizeBoard() {

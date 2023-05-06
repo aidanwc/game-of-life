@@ -1,11 +1,18 @@
 package com.interview.game.controller;
 
+import java.util.UUID;
+
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
 
 import com.interview.game.service.GameOfLifeService;
+import com.interview.game.service.GameOfLifeService.GameResponse;
 
 @RestController
 public class Controller {
@@ -17,17 +24,29 @@ public class Controller {
 
     @GetMapping("/")
     public String index() {
-        return "Greetings from Spring Boot!";
+        return "Welcome to the Game of Life!";
     }
 
     @PostMapping("/game")
-    public boolean[][] newGame(@RequestParam int size) {
+    @ResponseStatus(HttpStatus.CREATED)
+    public GameResponse newGame(@RequestParam int size) {
         return gameOfLifeService.newGame(size);
     }
 
-    @PostMapping("/evolve")
-    public boolean[][] evolve() {
-        return gameOfLifeService.evolve();
+    @GetMapping("/game/{gameId}")
+    public GameResponse getGame(@PathVariable UUID gameId) {
+        return gameOfLifeService.getGame(gameId);
+    }
+
+    @PostMapping("/game/{gameId}/evolve")
+    public GameResponse evolve(@PathVariable UUID gameId) {
+        return gameOfLifeService.evolve(gameId);
+    }
+
+    @DeleteMapping("/game/{gameId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteGame(@PathVariable UUID gameId) {
+        gameOfLifeService.deleteGame(gameId);
     }
 
 }
