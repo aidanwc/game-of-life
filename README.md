@@ -46,3 +46,13 @@ npm start
 ```
 
 8. Once both servers are up and running, open your web browser and navigate to [http://localhost:3000](http://localhost:3000) to access the application.
+
+## Testing
+
+To run the tests for the backend, navigate to the backend directory in a terminal window and run the following command:
+
+    ./mvnw test
+
+This will run the tests and show the results in the terminal window.
+
+Make sure to have the required dependencies installed before running the tests.

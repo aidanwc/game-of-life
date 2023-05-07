@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./App.css";
+import "./css/App.css";
 import GameBoard from "./components/GameBoard";
 import GameForm from "./components/GameForm";
 import { createGame, evolveGame, deleteGame } from "./services/GameService";
