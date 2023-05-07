@@ -9,12 +9,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.http.HttpStatus;
 
 import com.interview.game.service.GameOfLifeService;
 import com.interview.game.service.GameOfLifeService.GameResponse;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:3000")
 public class Controller {
     private final GameOfLifeService gameOfLifeService;
 
@@ -29,7 +31,7 @@ public class Controller {
 
     @PostMapping("/game")
     @ResponseStatus(HttpStatus.CREATED)
-    public GameResponse newGame(@RequestParam int size) {
+    public GameResponse newGame(@RequestParam(required = false, defaultValue = "10") int size) {
         return gameOfLifeService.newGame(size);
     }
 

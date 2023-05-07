@@ -5,7 +5,7 @@ public class GameOfLife {
     private boolean[][] board;
 
     public GameOfLife(int size) {
-        this.size = size;
+        this.size = Math.abs(size);
         this.board = new boolean[size][size];
         this.randomizeBoard();
     }
