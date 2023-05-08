@@ -40,6 +40,49 @@ public class GameOfLifeServiceTests {
     }
 
     @Test
+    public void testNewCustomGame() {
+        boolean[][] board = { { true, false }, { false, true } };
+        GameResponse response = service.newCustomGame(board);
+        UUID gameId = response.gameId();
+        assertTrue(games.containsKey(gameId));
+        assertEquals(2, games.get(gameId).getSize());
+
+    }
+
+    @Test
+    public void testNullBoard() {
+        boolean[][] board = null;
+        ResponseStatusException exception = assertThrows(ResponseStatusException.class, () -> {
+            service.newCustomGame(board);
+        });
+
+        assertEquals(HttpStatus.BAD_REQUEST, exception.getStatusCode());
+        assertEquals("Board cannot be null", exception.getReason());
+    }
+
+    @Test
+    public void testEmptyBoard() {
+        boolean[][] board = { {}, {} };
+        ResponseStatusException exception = assertThrows(ResponseStatusException.class, () -> {
+            service.newCustomGame(board);
+        });
+
+        assertEquals(HttpStatus.BAD_REQUEST, exception.getStatusCode());
+        assertEquals("Board cannot be null", exception.getReason());
+    }
+
+    @Test
+    public void testNotSquareBoard() {
+        boolean[][] board = { { true, false }, { false, true }, { true, false } };
+        ResponseStatusException exception = assertThrows(ResponseStatusException.class, () -> {
+            service.newCustomGame(board);
+        });
+
+        assertEquals(HttpStatus.BAD_REQUEST, exception.getStatusCode());
+        assertEquals("Board must have same height and width.", exception.getReason());
+    }
+
+    @Test
     public void testGetGame() {
         UUID gameId = UUID.randomUUID();
         GameOfLife gameOfLifeMock = mock(GameOfLife.class);

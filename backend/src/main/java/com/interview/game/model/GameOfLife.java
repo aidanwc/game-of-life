@@ -10,6 +10,11 @@ public class GameOfLife {
         this.randomizeBoard();
     }
 
+    public GameOfLife(boolean[][] board) {
+        this.size = board.length;
+        this.board = board;
+    }
+
     public int getSize() {
         return size;
     }
