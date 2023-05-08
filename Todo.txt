@@ -1,3 +1,0 @@
-1. Fix Styling
-2. Test install on other machine 
-3. Delete tests
